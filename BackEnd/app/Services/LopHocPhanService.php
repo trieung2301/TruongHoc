@@ -3,17 +3,29 @@
 namespace App\Services;
 
 use App\Models\LopHocPhan;
+use App\Models\LichHoc;
+use App\Models\LichThi;
+use App\Models\GiangVien;
 use App\Models\DangKyHocPhan;
 use App\Models\DiemSo;
 use App\Models\View\VDanhSachLopGiangVien;
 use App\Models\View\VSinhVienTrongLopHocPhan;
 use App\Services\StoreProcedure\NhapDiemService;
 use App\Services\StoreProcedure\TinhDiemTongKetService;
+use App\Services\LogService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
 class LopHocPhanService
 {
+    protected $logService;
+
+    public function __construct(LogService $logService)
+    {
+        $this->logService = $logService;
+    }
+
     public function getLopPhanCong($giangVienID)
     {
         return VDanhSachLopGiangVien::where('GiangVienID', $giangVienID)
@@ -107,5 +119,74 @@ class LopHocPhanService
             'success' => true,
             'message' => 'Cập nhật điểm thành công và đã tính toán lại tổng kết.',
         ];
+    }
+
+    /**
+     * Tạo mới lớp học phần
+     */
+    public function taoLop(array $data): LopHocPhan
+    {
+        return DB::transaction(function () use ($data) {
+            $lop = LopHocPhan::create([
+                'MonHocID'     => $data['MonHocID'],
+                'HocKyID'      => $data['HocKyID'],
+                'GiangVienID'  => $data['GiangVienID'] ?? null,
+                'MaLopHP'      => $data['MaLopHP'],
+                'SoLuongToiDa' => $data['SoLuongToiDa'] ?? 80,
+                'KhoahocAllowed' => $data['KhoahocAllowed'] ?? null,
+                'NgayBatDau'   => $data['NgayBatDau'],
+                'NgayKetThuc'  => $data['NgayKetThuc'],
+            ]);
+
+            $this->log('TAO_LOP_HOC_PHAN', "Tạo lớp {$lop->MaLopHP} (ID: {$lop->LopHocPhanID})");
+
+            return $lop;
+        });
+    }
+
+    public function capNhat(LopHocPhan $lop, array $data): LopHocPhan
+    {
+        $lop->update([
+            'MaLopHP'      => $data['MaLopHP']      ?? $lop->MaLopHP,
+            'SoLuongToiDa' => $data['SoLuongToiDa'] ?? $lop->SoLuongToiDa,
+            'KhoahocAllowed' => $data['KhoahocAllowed'] ?? $lop->KhoahocAllowed,
+            'NgayBatDau'   => $data['NgayBatDau']   ?? $lop->NgayBatDau,
+            'NgayKetThuc'  => $data['NgayKetThuc']  ?? $lop->NgayKetThuc,
+        ]);
+
+        $this->log('CAP_NHAT_LOP_HP', "Cập nhật lớp {$lop->MaLopHP}");
+
+        return $lop;
+    }
+
+    public function phanCongGiangVien(LopHocPhan $lop, ?int $giangVienId): LopHocPhan
+    {
+        if ($giangVienId !== null) {
+            GiangVien::findOrFail($giangVienId);
+        }
+
+        $lop->update(['GiangVienID' => $giangVienId]);
+
+        $moTa = $giangVienId 
+            ? "Phân công GV ID {$giangVienId} cho lớp {$lop->MaLopHP}"
+            : "Bỏ phân công giảng viên lớp {$lop->MaLopHP}";
+
+        $this->log('PHAN_CONG_GV', $moTa);
+
+        return $lop;
+    }
+
+    public function capNhatSiSo(LopHocPhan $lop, int $siSo): LopHocPhan
+    {
+        $lop->update(['SoLuongToiDa' => $siSo]);
+
+        $this->log('CAP_NHAT_SISO', "Cập nhật sĩ số lớp {$lop->MaLopHP} → {$siSo}");
+
+        return $lop;
+    }
+
+    private function log(string $hanhDong, string $moTa, int $id = null): void
+    {
+        $this->logService->write($hanhDong, $moTa, 'lophocphan', $id);
     }
 }

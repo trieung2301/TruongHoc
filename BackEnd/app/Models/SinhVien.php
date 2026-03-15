@@ -13,7 +13,7 @@ class SinhVien extends Model
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'UserID', 'MaSV', 'HoTen', 'NgaySinh', 
+        'UserID', 'MaSV', 'khoahoc', 'HoTen', 'NgaySinh', 
         'KhoaID', 'NganhID', 'TinhTrang', 
         'LopSinhHoatID', 'gioitinh', 'email', 
         'sodienthoai'
@@ -21,7 +21,7 @@ class SinhVien extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'UserID', 'id');
+        return $this->belongsTo(User::class, 'UserID', 'UserID');
     }
 
     public function nganh()

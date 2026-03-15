@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\LopHocPhan;
 use App\Models\DotDangKy;
 use App\Models\DangKyHocPhan;
+use App\Models\LichThi;
 use App\Services\StoreProcedure\HuyDangKyHocPhanService;
 use App\Jobs\ProcessDangKyHocPhan;
 
@@ -16,13 +17,17 @@ class DangKyHocPhanController extends Controller
 {
     public function getLopMo()
     {
-        $dot = DotDangKy::where('TrangThai', 1)->first();
-        if (!$dot || !$dot->isOpening()) {
+        $dotMo = DotDangKy::where('TrangThai', 1)
+            ->where('NgayBatDau', '<=', now())
+            ->where('NgayKetThuc', '>=', now())
+            ->pluck('HocKyID');
+
+        if ($dotMo->isEmpty()) {
             return response()->json(['message' => 'Ngoài thời gian đăng ký'], 400);
         }
 
         $lops = LopHocPhan::with(['monHoc', 'giangVien', 'lichHoc'])
-            ->where('HocKyID', $dot->HocKyID)
+            ->whereIn('HocKyID', $dotMo)
             ->get();
 
         return response()->json($lops);
@@ -150,5 +155,27 @@ class DangKyHocPhanController extends Controller
             'hoc_ky' => $dot->TenDot,
             'data'   => $danhSach
         ]);
+    }
+    
+    private function trungLichThi(LichThi $lt1, LichThi $lt2): bool
+    {
+        // Nếu ngày thi khác nhau → không trùng
+        if ($lt1->NgayThi != $lt2->NgayThi) {
+            return false;
+        }
+
+        // Chuyển giờ thành timestamp (dùng strtotime)
+        $start1 = strtotime($lt1->GioBatDau);
+        $end1   = strtotime($lt1->GioKetThuc);
+        $start2 = strtotime($lt2->GioBatDau);
+        $end2   = strtotime($lt2->GioKetThuc);
+
+        // Nếu có giờ nào không parse được → coi như không trùng (an toàn)
+        if ($start1 === false || $end1 === false || $start2 === false || $end2 === false) {
+            return false;
+        }
+
+        // Trùng nếu khoảng thời gian giao nhau
+        return !($end1 <= $start2 || $end2 <= $start1);
     }
 }

@@ -16,6 +16,7 @@ class LopHocPhan extends Model
         'GiangVienID',
         'MaLopHP',
         'SoLuongToiDa',
+        'KhoahocAllowed',
         'NgayBatDau',
         'NgayKetThuc'
     ];

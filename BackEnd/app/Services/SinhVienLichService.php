@@ -10,9 +10,6 @@ use Carbon\Carbon;
 
 class SinhVienLichService
 {
-    /**
-     * Lấy lịch học theo tuần của sinh viên
-     */
     public function getLichHoc(User $user, ?int $hocKyId = null, ?string $date = null): array
     {
         $sinhVien = $user->sinhVien;
@@ -55,9 +52,6 @@ class SinhVienLichService
         ];
     }
 
-    /**
-     * Lấy lịch thi theo học kỳ của sinh viên
-     */
     public function getLichThi(User $user, ?int $hocKyId = null): array
     {
         $sinhVien = $user->sinhVien;

@@ -8,25 +8,36 @@ use App\Http\Controllers\Api\SinhVien\LichHocController;
 use App\Http\Controllers\Api\SinhVien\LichThiController;
 use App\Http\Controllers\Api\SinhVien\KetQuaHocTapController;
 use App\Http\Controllers\Api\SinhVien\DangKyHocPhanController;
-use App\Http\Controllers\Api\LopHocPhanController;
+use App\Http\Controllers\Api\HocTap\LopHocPhanController;
 use App\Http\Controllers\Api\GiangVien\ProfileController as GiangVienProfile;
 use App\Http\Controllers\Api\GiangVien\LopHocPhanGiangVienController;
 use App\Http\Controllers\Api\GiangVien\LichGiangDayController;
 use App\Http\Controllers\Api\GiangVien\LichCoiThiController;
 use App\Http\Controllers\Api\GiangVien\LopSinhHoatCoVanController;
+use App\Http\Controllers\Api\Admin\NamHocController;
+use App\Http\Controllers\Api\Admin\DotDangKyController as AdminDotDangKyController;
+use App\Http\Controllers\Api\Admin\LopHocPhanController as AdminLopHocPhanController;
+use App\Http\Controllers\Api\Admin\ChuongTrinhDaoTaoController as AdminChuongTrinhDaoTaoController;
+use App\Http\Controllers\Api\Admin\MonHocController;
+use App\Http\Controllers\Api\Admin\LichHocController as AdminLichHocController;
+use App\Http\Controllers\Api\Admin\LichThiController as AdminLichThiController;
+use App\Http\Controllers\Api\Admin\LopSinhHoatController as AdminLopSinhHoatController;
+use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Admin\DiemSoController;
+use App\Http\Controllers\Api\Admin\ThongKeController;
+
 
 Route::post('/login', [AuthController::class, 'login']);
 
 // Tất cả các đều yêu cầu Đăng nhập và Tài khoản phải đang Active
 Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
-    Route::post('/change-password', [AuthController::class, 'changePassword']);
-    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    Route::post('/change-password', [AuthController::class, 'changePasswordHash']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     // --- SINH VIÊN ---
-    Route::middleware(['auth:api', 'check.active', 'check.sinhvien']) ->prefix('sinh-vien') ->group(function () {
+    Route::middleware(['auth:api', 'check.active', 'check.sinhvien', 'check.dot_open']) ->prefix('sinh-vien') ->group(function () {
         Route::get('profile', [SinhVienProfile::class, 'show']);
         Route::put('profile/contact', [SinhVienProfile::class, 'updateContact']);
         Route::get('study-info', [SinhVienProfile::class, 'studyInfo']);
@@ -75,4 +86,72 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
         Route::post('lop-sinh-hoat/cap-nhat-diem-ren-luyen', [LopSinhHoatCoVanController::class, 'capNhatDiemRenLuyen']);
     });
 
+    Route::middleware(\App\Http\Middleware\CheckAdmin::class)->prefix('admin')->group(function () {
+        Route::post('nam-hoc', [NamHocController::class, 'storeNamHoc']);
+        Route::post('hoc-ky', [NamHocController::class, 'storeHocKy']);
+        Route::get('hoc-ky', [NamHocController::class, 'getDanhSachHocKy']);
+
+        Route::post('dot-dang-ky/filter', [AdminDotDangKyController::class, 'filterDots']);
+        Route::post('dot-dang-ky/lop-hoc-phan-list', [AdminDotDangKyController::class, 'getLopHocPhanByJson']);
+        Route::post('dot-dang-ky', [AdminDotDangKyController::class, 'storeDotDangKy']);
+        Route::put('dot-dang-ky/cap-nhat', [AdminDotDangKyController::class, 'updateDotDangKy']);
+        Route::put('dot-dang-ky/doi-trang-thai', [AdminDotDangKyController::class, 'changeStatusDotDangKy']);
+        
+        Route::post('lop-hoc-phan', [AdminLopHocPhanController::class, 'store']);
+        Route::patch('lop-hoc-phan/update', [AdminLopHocPhanController::class, 'update']);
+        Route::patch('lop-hoc-phan/giang-vien', [AdminLopHocPhanController::class, 'assignGiangVien']);
+        Route::patch('lop-hoc-phan/si-so', [AdminLopHocPhanController::class, 'setSiSo']);
+        
+        Route::post('lich-hoc/list', [AdminLichHocController::class, 'index']);
+        Route::post('lich-hoc/create', [AdminLichHocController::class, 'store']);
+        Route::post('lich-hoc/update', [AdminLichHocController::class, 'update']);
+
+        Route::post('lich-thi/create', [AdminLichThiController::class, 'store']);
+        Route::post('lich-thi/update', [AdminLichThiController::class, 'update']);
+
+        Route::get('chuong-trinh-dao-tao', [AdminChuongTrinhDaoTaoController::class, 'index']);
+        Route::post('chuong-trinh-dao-tao', [AdminChuongTrinhDaoTaoController::class, 'store']);
+        Route::patch('chuong-trinh-dao-tao', [AdminChuongTrinhDaoTaoController::class, 'update']);
+        Route::post('chuong-trinh-dao-tao/gan-nhieu-mon', [AdminChuongTrinhDaoTaoController::class, 'ganNhieuMon']);
+        
+        Route::post('mon-hoc/list', [MonHocController::class, 'index']);
+        Route::post('mon-hoc/', [MonHocController::class, 'store']); 
+        Route::put('mon-hoc/', [MonHocController::class, 'update']); 
+        Route::post('mon-hoc/tien-quyet', [MonHocController::class, 'addTienQuyet']);
+        Route::post('mon-hoc/song-hanh', [MonHocController::class, 'addSongHanh']);
+
+        Route::post('lop-sinh-hoat/danh-sach', [AdminLopSinhHoatController::class, 'index']);
+        Route::post('lop-sinh-hoat/create', [AdminLopSinhHoatController::class, 'store']);
+        Route::post('lop-sinh-hoat/assign-advisor', [AdminLopSinhHoatController::class, 'assignAdvisor']);
+        Route::post('lop-sinh-hoat/add-students', [AdminLopSinhHoatController::class, 'addStudents']);
+        Route::post('lop-sinh-hoat/list-students', [AdminLopSinhHoatController::class, 'listStudents']);
+        Route::post('lop-sinh-hoat/remove-student', [AdminLopSinhHoatController::class, 'removeStudent']);
+
+        Route::post('users/sinh-vien', [UserController::class, 'storeSinhVien']);
+        Route::post('users/staff-profile', [UserController::class, 'storeStaffProfile']);
+        Route::post('users/assign-account', [UserController::class, 'assignAccount']);
+        Route::post('users/toggle-status', [UserController::class, 'toggleStatus']);
+        Route::post('users/reset-password', [UserController::class, 'resetPassword']);
+
+        Route::post('users/sinh-vien/index', [UserController::class, 'indexSinhVien']);
+        Route::post('users/sinh-vien/search', [UserController::class, 'indexSinhVien']);
+        Route::post('users/staff/index', [UserController::class, 'indexStaff']);
+        Route::post('users/staff/search', [UserController::class, 'indexStaff']);
+
+        Route::post('users/giang-vien/index', [UserController::class, 'indexStaff']);
+        Route::post('users/admin-list/index', [UserController::class, 'indexStaff']);
+
+
+        Route::post('diem-so/danh-sach-lop-hp', [DiemSoController::class, 'indexLopHP']);
+        Route::post('diem-so/danh-sach-ren-luyen', [DiemSoController::class, 'indexRenLuyen']);
+        Route::post('diem-so/nhap-diem', [DiemSoController::class, 'updateDiem']);
+        Route::post('diem-so/nhap-diem-ren-luyen', [DiemSoController::class, 'updateRenLuyen']);
+        Route::post('diem-so/khoa-diem', [DiemSoController::class, 'lockDiem']);
+        Route::post('diem-so/mo-khoa-diem', [DiemSoController::class, 'unlockDiem']);
+
+        Route::post('thong-ke/sinh-vien-khoa', [ThongKeController::class, 'sinhVienTheoKhoa']);
+        Route::post('thong-ke/si-so-lop', [ThongKeController::class, 'thongKeSiSoLop']);
+        Route::post('thong-ke/ty-le-dau-rot', [ThongKeController::class, 'tyLeDauRot']);
+        Route::post('thong-ke/gpa-hoc-ky', [ThongKeController::class, 'gpaTrungBinh']);
+    });
 });

@@ -11,7 +11,7 @@ class CheckAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if (!$user->isGiangVien()) {
+        if (!$user->isAdmin()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Bạn không phải admin.'

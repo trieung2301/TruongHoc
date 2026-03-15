@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -28,7 +27,10 @@ class AuthService
             ]);
         }
 
-        $credentials = $request->only('username', 'password');
+        $credentials = [
+            'Username' => $request->username,
+            'password' => $request->password
+        ];
 
         if (!$token = JWTAuth::attempt($credentials)) {
             RateLimiter::hit($key, 60);
@@ -39,11 +41,11 @@ class AuthService
 
         $user = JWTAuth::user();
 
-        if (!$user->isActive()) {
+        if ($user->is_active == 0) {
             JWTAuth::invalidate($token);
             return [
                 'success' => false,
-                'message' => 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.',
+                'message' => 'Tài khoản của bạn đã bị khóa.',
                 'status' => 403
             ];
         }
@@ -66,7 +68,11 @@ class AuthService
 
     public function logout(Request $request): array
     {
-        JWTAuth::invalidate(JWTAuth::getToken());
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+        } catch (\Exception $e) {
+            // Token đã hết hạn hoặc không hợp lệ vẫn cho logout thành công ở client
+        }
 
         return [
             'success' => true,
@@ -83,9 +89,8 @@ class AuthService
             'user' => [
                 'id' => $user->UserID,
                 'username' => $user->Username,
-                'email' => $user->Email,
                 'role' => $user->role->RoleName ?? null,
-                'created_at' => $user->CreatedAt,
+                'created_at' => $user->created_at,
             ]
         ];
     }
@@ -94,7 +99,7 @@ class AuthService
     {
         $request->validate([
             'current_password' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         $user = $request->user();
@@ -121,7 +126,7 @@ class AuthService
     {
         $request->validate([
             'user_id' => 'required|integer|exists:users,UserID',
-            'new_password' => 'required|string|min:8',
+            'new_password' => 'required|string|min:6',
         ]);
 
         $targetUser = User::findOrFail($request->user_id);

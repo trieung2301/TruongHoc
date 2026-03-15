@@ -21,21 +21,18 @@ class DotDangKy extends Model
         'GhiChu'
     ];
 
-    private function checkThoiGianDangKy($hocKyID) {
-        $dot = DotDangKy::where('HocKyID', $hocKyID)
-                        ->where('TrangThai', 1)
-                        ->first();
-        return $dot && $dot->isOpening();
+    public function hocKy()
+    {
+        return $this->belongsTo(HocKy::class, 'HocKyID', 'HocKyID');
     }
 
     public function isOpening(): bool
     {
-        if ($this->TrangThai !== 1) {
+        if ($this->TrangThai === 0) {
             return false;
         }
 
         $now = now();
-
         return $this->NgayBatDau <= $now && $this->NgayKetThuc >= $now;
     }
 }

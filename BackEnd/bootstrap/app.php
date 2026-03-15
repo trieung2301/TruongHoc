@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.sinhvien'  => \App\Http\Middleware\CheckSinhVien::class,
             'check.giangvien' => \App\Http\Middleware\CheckGiangVien::class,
             'check.active'    => \App\Http\Middleware\CheckActiveUser::class,
+            'check.dot_open' => \App\Http\Middleware\CheckDotDangKyOpen::class,
         ]);
 
         // (tất cả route api/* khi đã auth sẽ phải qua check active)

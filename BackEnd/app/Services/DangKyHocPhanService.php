@@ -23,7 +23,6 @@ class DangKyHocPhanService
             'hocKy'
         ])->findOrFail($lopHocPhanID);
 
-        // 0. Kiểm tra đợt đăng ký đang mở
         $dot = DotDangKy::where('HocKyID', $lop->HocKyID)
             ->where('TrangThai', 1)
             ->first();
@@ -32,29 +31,31 @@ class DangKyHocPhanService
             throw new Exception('Hiện tại không trong thời gian đăng ký học phần cho học kỳ này.');
         }
 
-        // 1. Đã đăng ký môn này trong học kỳ chưa 
         if ($this->daDangKyMonTrongHocKy($sinhVien->SinhVienID, $lop->MonHocID, $lop->HocKyID)) {
             throw new Exception('Bạn đã đăng ký một lớp khác của môn học này trong học kỳ hiện tại.');
         }
 
-        // 2. Kiểm tra sĩ số lớp
         if (!$this->checkSiSo($lop)) {
             throw new Exception('Lớp học phần đã đầy sĩ số.');
         }
 
-        // 3. Môn tiên quyết
         if (!$this->checkMonTienQuyet($sinhVien->SinhVienID, $lop->monHoc)) {
             throw new Exception('Bạn chưa hoàn thành môn tiên quyết cho môn này.');
         }
 
-        // 4. Môn song hành (nếu có)
         if (!$this->checkMonSongHanh($sinhVien->SinhVienID, $lop->monHoc)) {
             throw new Exception('Bạn cần đăng ký đồng thời môn song hành.');
         }
 
-        // 5. Trùng lịch học / thi
         if ($this->checkTrungLich($sinhVien, $lop)) {
             throw new Exception('Lịch học hoặc lịch thi bị trùng với lớp đã đăng ký.');
+        }
+        
+        if ($lop->KhoahocAllowed !== null) {
+            $allowed = explode(',', str_replace(' ', '', $lop->KhoahocAllowed));
+            if (!in_array($sinhVien->khoahoc, $allowed)) {
+                throw new Exception('Lớp học phần này không dành cho khóa ' . $sinhVien->khoahoc . ' của bạn.');
+            }
         }
 
         return [
@@ -62,6 +63,7 @@ class DangKyHocPhanService
             'message' => 'Validate đăng ký thành công, có thể tiến hành đăng ký.',
         ];
     }
+
     private function daDangKyMonTrongHocKy(int $sinhVienID, int $monHocID, int $hocKyID): bool
     {
         try {
@@ -77,7 +79,7 @@ class DangKyHocPhanService
             return DangKyHocPhan::where('SinhVienID', $sinhVienID)
                 ->whereHas('lopHocPhan', function ($q) use ($monHocID, $hocKyID) {
                     $q->where('MonHocID', $monHocID)
-                      ->where('HocKyID', $hocKyID);
+                        ->where('HocKyID', $hocKyID);
                 })
                 ->exists();
         }
@@ -167,26 +169,18 @@ class DangKyHocPhanService
             return false;
         }
 
-        // Mapping ca thi (giả sử ca 1: 1-3, ca 2: 4-6, ...)
-        $mapping = [
-            1 => ['start' => 1, 'end' => 3],
-            2 => ['start' => 4, 'end' => 6],
-            3 => ['start' => 7, 'end' => 9],
-            4 => ['start' => 10, 'end' => 12],
-        ];
+        $start1 = strtotime($lt1->GioBatDau);
+        $end1   = strtotime($lt1->GioKetThuc);
+        $start2 = strtotime($lt2->GioBatDau);
+        $end2   = strtotime($lt2->GioKetThuc);
 
-        $ca1 = $this->getCaThi($lt1->GioBatDau);
-        $ca2 = $this->getCaThi($lt2->GioBatDau);
+        if ($start1 === false || $end1 === false || $start2 === false || $end2 === false) {
+            return false;
+        }
 
-        $range1 = $mapping[$ca1] ?? null;
-        $range2 = $mapping[$ca2] ?? null;
-
-        if (!$range1 || !$range2) return false;
-
-        return !($range1['end'] < $range2['start'] || $range2['end'] < $range1['start']);
+        return !($end1 <= $start2 || $end2 <= $start1);
     }
 
-    // Helper: ước lượng ca thi từ giờ bắt đầu (cần điều chỉnh theo quy định trường)
     private function getCaThi(string $gioBatDau): ?int
     {
         $hour = (int) explode(':', $gioBatDau)[0];

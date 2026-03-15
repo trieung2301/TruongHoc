@@ -38,9 +38,7 @@ class SinhVienChuongTrinhDaoTaoService
             'message' => 'Lấy chương trình đào tạo thành công',
         ];
     }
-    /**
-     * Lấy danh sách môn đã học (với điểm tốt nhất nếu học nhiều lần)
-     */
+
     public function getMonDaHocVaDiemTotNhat(User $user)
     {
         $sv = $user->sinhVien;
@@ -48,12 +46,10 @@ class SinhVienChuongTrinhDaoTaoService
             throw new ModelNotFoundException('Không tìm thấy thông tin sinh viên.');
         }
 
-        // Lấy tất cả đăng ký học phần của SV, kèm điểm & môn học
         $dangKy = $sv->dangKyHocPhan()
             ->with(['lopHocPhan.monHoc', 'diemSo'])
             ->get();
 
-        // Group theo MonHocID, lấy điểm cao nhất nếu có nhiều lần
         $grouped = $dangKy->groupBy(function ($dk) {
             return $dk->lopHocPhan->monHoc->MonHocID ?? null;
         })->filter(function ($group) {
@@ -63,7 +59,6 @@ class SinhVienChuongTrinhDaoTaoService
         $result = $grouped->map(function ($group) {
             $mon = $group->first()->lopHocPhan->monHoc;
 
-            // Lấy tất cả điểm của môn này (có thể nhiều lần đăng ký)
             $diemCacLan = $group->map(function ($dk) {
                 return $dk->diemSo ? $dk->diemSo->DiemTongKet : null;
             })->filter()->values();
@@ -85,9 +80,6 @@ class SinhVienChuongTrinhDaoTaoService
         return $result;
     }
 
-    /**
-     * Xem các môn đã hoàn thành (điểm tốt nhất >= 5.0)
-     */
     public function getMonDaHoanThanh(User $user)
     {
         $monDaHoc = $this->getMonDaHocVaDiemTotNhat($user);
@@ -109,9 +101,6 @@ class SinhVienChuongTrinhDaoTaoService
             ->toArray();
     }
 
-    /**
-     * Xem các môn còn thiếu (chưa đạt hoặc chưa học)
-     */
     public function getMonConThieu(User $user)
     {
         $sv = $user->sinhVien;
@@ -119,7 +108,6 @@ class SinhVienChuongTrinhDaoTaoService
             throw new ModelNotFoundException('Không tìm thấy ngành học.');
         }
 
-        // Lấy toàn bộ CTĐT của ngành
         $ctdt = $sv->nganh->chuongTrinhDaoTao()
             ->with('monHoc')
             ->get()
@@ -134,11 +122,9 @@ class SinhVienChuongTrinhDaoTaoService
                 ];
             });
 
-        // Lấy danh sách môn đã học + điểm tốt nhất
         $monDaHoc = $this->getMonDaHocVaDiemTotNhat($user)
             ->keyBy('mon_hoc_id');
 
-        // Lọc môn còn thiếu: chưa học HOẶC điểm tốt nhất < 5.0
         $conThieu = $ctdt->filter(function ($monCT) use ($monDaHoc) {
             $daHoc = $monDaHoc->get($monCT['mon_hoc_id']);
             return !$daHoc || !$daHoc['da_dat'];

@@ -12,6 +12,66 @@ use Carbon\Carbon;
 
 class LopSinhHoatService
 {
+    public function taoLopSinhHoat(array $data)
+    {
+        return \App\Models\LopSinhHoat::create([
+            'MaLop'       => $data['MaLop'],
+            'TenLop'      => $data['TenLop'],
+            'KhoaID'      => $data['KhoaID'],
+            'GiangVienID' => $data['GiangVienID'] ?? null,
+            'NamNhapHoc'  => $data['NamNhapHoc']
+        ]);
+    }
+
+    public function filterLopSinhHoat(array $filters)
+    {
+        $query = \App\Models\LopSinhHoat::with(['khoa', 'coVanHocTap']);
+
+        if (isset($filters['KhoaID'])) {
+            $query->where('KhoaID', $filters['KhoaID']);
+        }
+
+        if (isset($filters['NamNhapHoc'])) {
+            $query->where('NamNhapHoc', $filters['NamNhapHoc']);
+        }
+
+        return $query->get();
+    }
+
+    public function phanCongCoVan($lopID, $giangVienID)
+    {
+        $lop = \App\Models\LopSinhHoat::findOrFail($lopID);
+        $lop->update(['GiangVienID' => $giangVienID]);
+        return $lop;
+    }
+
+    public function themSinhVienVaoLop($lopID, array $sinhVienID)
+    {
+        return \App\Models\SinhVien::whereIn('SinhVienID', $sinhVienID)
+            ->update(['LopSinhHoatID' => $lopID]);
+    }
+
+    public function xoaSinhVienKhoiLop($sinhVienID)
+    {
+        $sinhVien = \App\Models\SinhVien::findOrFail($sinhVienID);
+        return $sinhVien->update(['LopSinhHoatID' => null]);
+    }
+
+    public function layDanhSachLopTongQuat($filters)
+    {
+        $query = \App\Models\LopSinhHoat::with(['khoa', 'coVanHocTap']);
+
+        if (!empty($filters['KhoaID'])) {
+            $query->where('KhoaID', $filters['KhoaID']);
+        }
+
+        if (!empty($filters['NamNhapHoc'])) {
+            $query->where('NamNhapHoc', $filters['NamNhapHoc']);
+        }
+
+        return $query->get();
+    }
+
     public function getLopSinhHoatPhanCong($giangVienID)
     {
         return LopSinhHoat::where('GiangVienID', $giangVienID)
@@ -129,12 +189,15 @@ class LopSinhHoatService
                 ]
             );
 
-            HeThongLog::create([
-                'UserID'       => $nguoiThucHienID, 
-                'HanhDong'     => 'cap_nhat_diem_ren_luyen',
+            DB::table('hethong_log')->insert([
+                'UserID'       => $nguoiThucHienID,
+                'HanhDong'     => 'Update',
                 'MoTa'         => "Cập nhật điểm RL cho SV $sinhVienID, HK $hocKyID: $tongDiem",
                 'BangLienQuan' => 'diemrenluyen',
                 'IDBanGhi'     => $diem->DiemRenLuyenID,
+                'IP'           => request()->ip(),
+                'UserAgent'    => request()->userAgent(),
+                'created_at'   => now(),
             ]);
 
             return ['success' => true, 'data' => $diem];
