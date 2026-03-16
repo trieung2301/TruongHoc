@@ -19,7 +19,6 @@ class ThongBao extends Model
         'DoiTuong',
         'NgayBatDauHienThi',
         'NgayKetThucHienThi',
-        'DaDoc'
     ];
 
     public function scopeActive($query)

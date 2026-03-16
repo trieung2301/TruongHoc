@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\Admin\LopSinhHoatController as AdminLopSinhHoatCont
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\DiemSoController;
 use App\Http\Controllers\Api\Admin\ThongKeController;
+use App\Http\Controllers\Api\Admin\ThongBaoController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -87,6 +88,9 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
     });
 
     Route::middleware(\App\Http\Middleware\CheckAdmin::class)->prefix('admin')->group(function () {
+        Route::post('/thong-bao', [ThongBaoController::class, 'store']);
+        Route::get('/thong-bao', [ThongBaoController::class, 'index']);
+
         Route::post('nam-hoc', [NamHocController::class, 'storeNamHoc']);
         Route::post('hoc-ky', [NamHocController::class, 'storeHocKy']);
         Route::get('hoc-ky', [NamHocController::class, 'getDanhSachHocKy']);
