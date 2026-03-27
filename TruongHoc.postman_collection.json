@@ -1,0 +1,3923 @@
+{
+  "info": {
+    "_postman_id": "66d92e3c-9228-4dbf-b5ff-ca48e1abda33",
+    "name": "TruongHoc",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50031295",
+    "_collection_link": "https://go.postman.co/collection/50031295-66d92e3c-9228-4dbf-b5ff-ca48e1abda33?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Lấy điểm rèn luyện",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"HocKyID\": 1, \"LopSinhHoatID\": 5}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/diem-so/danh-sach-ren-luyen",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "diem-so",
+                "danh-sach-ren-luyen"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm học kỳ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"NamHocID\": 1,\r\n  \"TenHocKy\": \"Học kỳ 1 - 2025-2026\",\r\n  \"LoaiHocKy\": \"HK1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/hoc-ky",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "hoc-ky"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách học kỳ",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nam_hoc_id\": \"1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/hoc-ky",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "hoc-ky"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lọc đợt đăng ký theo Năm/Kỳ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NamHocID\": 11,\r\n    \"HocKyID\": 11\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/dot-dang-ky/filter",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "dot-dang-ky",
+                "filter"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lấy danh sách học phần theo Đợt, Khoa, Ngành",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"DotDangKyID\": 11,\r\n    \"KhoaID\": 1,\r\n    \"NganhID\": null\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/dot-dang-ky/lop-hoc-phan-list",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "dot-dang-ky",
+                "lop-hoc-phan-list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tạo đợt đăng ký",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"HocKyID\": 11,\r\n    \"NgayBatDau\": \"2024-06-01 08:00:00\",\r\n    \"NgayKetThuc\": \"2024-06-15 23:59:59\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/dot-dang-ky/tao-moi",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "dot-dang-ky",
+                "tao-moi"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật đợt đăng ký học phần",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"DotDangKyID\": 11,\r\n    \"TenDot\": \"Đợt đăng ký học kỳ 1 - Lần 2\",\r\n    \"NgayBatDau\": \"2024-07-01 07:30:00\",\r\n    \"NgayKetThuc\": \"2024-07-15 17:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/dot-dang-ky/cap-nhat",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "dot-dang-ky",
+                "cap-nhat"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Đóng/Mở đợt đăng ký học phần",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"DotDangKyID\": 11,\r\n    \"TrangThai\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/dot-dang-ky/doi-trang-thai",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "dot-dang-ky",
+                "doi-trang-thai"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tạo lớp học phần",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"HocKyID\": 3,\r\n    \"MaLopHP\": \"IT001-HK1-2025-K23\",\r\n    \"SoLuongToiDa\": 80,\r\n    \"KhoahocAllowed\": \"K23,K24,K25\",\r\n    \"NgayBatDau\": \"2025-09-01\",\r\n    \"NgayKetThuc\": \"2025-12-31\",\r\n    \"GiangVienID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-hoc-phan",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-hoc-phan"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật lớp học phần",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 15,\r\n    \"SoLuongToiDa\": 10,\r\n    \"KhoahocAllowed\": \"K3,K2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-hoc-phan/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-hoc-phan",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Phân công giảng viên",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 15, \r\n    \"GiangVienID\": 2 \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-hoc-phan/giang-vien",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-hoc-phan",
+                "giang-vien"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thiết lập sĩ số (Số lượng tối đa)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 1,\r\n    \"SoLuongToiDa\": 60\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-hoc-phan/si-so",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-hoc-phan",
+                "si-so"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lấy danh sách Lớp & Lịch học",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NamHocID\": 1,\r\n    \"HocKyID\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lich-hoc/list",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lich-hoc",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm mới Lịch học",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 1,\r\n    \"NgayHoc\": \"2024-05-20\",\r\n    \"BuoiHoc\": \"Sáng\",\r\n    \"TietBatDau\": 1,\r\n    \"SoTiet\": 3,\r\n    \"PhongHoc\": \"A1-101\",\r\n    \"GhiChu\": \"Học bù\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lich-hoc/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lich-hoc",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật Lịch học",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LichHocID\": 2, \r\n    \"NgayHoc\": \"2024-05-21\",\r\n    \"BuoiHoc\": \"Chiều\",\r\n    \"TietBatDau\": 7,\r\n    \"SoTiet\": 3,\r\n    \"PhongHoc\": \"B2-202\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lich-hoc/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lich-hoc",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm mới Lịch thi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 1,\r\n    \"NgayThi\": \"2024-06-15\",\r\n    \"GioBatDau\": \"07:30\",\r\n    \"GioKetThuc\": \"09:30\",\r\n    \"PhongThi\": \"Hội trường A\",\r\n    \"HinhThucThi\": \"TuLuan\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lich-thi/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lich-thi",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật Lịch thi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LichThiID\": 2,\r\n    \"NgayThi\": \"2024-06-15\",\r\n    \"GioBatDau\": \"07:30\",\r\n    \"GioKetThuc\": \"09:30\",\r\n    \"PhongThi\": \"Hội trường B\",\r\n    \"HinhThucThi\": \"TuLuan\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lich-thi/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lich-thi",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách CTDT",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/chuong-trinh-dao-tao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "chuong-trinh-dao-tao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm 1 môn vào CTĐT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NganhID\": 1,\r\n    \"MonHocID\": 5,\r\n    \"HocKyGoiY\": 3,\r\n    \"BatBuoc\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/chuong-trinh-dao-tao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "chuong-trinh-dao-tao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật 1 môn trong CTĐT",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"ID\": 1,\r\n    \"HocKyGoiY\": 4,\r\n    \"BatBuoc\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/chuong-trinh-dao-tao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "chuong-trinh-dao-tao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gán nhiều môn vào CTDT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NganhID\": 1,\r\n    \"MonHocIDs\": [3, 4],\r\n    \"HocKyGoiY\": 2,\r\n    \"BatBuoc\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/chuong-trinh-dao-tao/gan-nhieu-mon",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "chuong-trinh-dao-tao",
+                "gan-nhieu-mon"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách môn học",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    //\"KhoaID\": 1,\r\n    \"NganhID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/mon-hoc/list",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "mon-hoc",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm môn học mới",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MaMon\": \"INT1306111\",\r\n    \"TenMon\": \"Cấu trúc dữ liệu và Giải thuật\",\r\n    \"SoTinChi\": 3,\r\n    \"TietLyThuyet\": 30,\r\n    \"TietThucHanh\": 15,\r\n    \"KhoaID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/mon-hoc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "mon-hoc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật môn học",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"TenMon\": \"Cấu trúc dữ liệu và Giải thuật (Nâng cao)\",\r\n    \"KhoaID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/mon-hoc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "mon-hoc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gán môn tiên quyết",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"mon_hoc_id\": 10,\r\n    \"mon_tien_quyet_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/mon-hoc/tien-quyet",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "mon-hoc",
+                "tien-quyet"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gán môn song hành",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"mon_hoc_id\": 15,\r\n    \"mon_song_hanh_id\": 16\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/mon-hoc/song-hanh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "mon-hoc",
+                "song-hanh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách lớp sinh hoạt tổng quát",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"KhoaID\": 1,\r\n    \"NamNhapHoc\": 2024\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-sinh-hoat/danh-sach",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-sinh-hoat",
+                "danh-sach"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm lớp mới sinh hoạt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MaLop\": \"K24-CNTT011\",\r\n    \"TenLop\": \"Công nghệ thông tin 01 - Khóa 24\",\r\n    \"KhoaID\": 1,\r\n    \"NamNhapHoc\": 2024,\r\n    \"GiangVienID\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-sinh-hoat/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-sinh-hoat",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Phân công cố vấn học tập",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopSinhHoatID\": 2,\r\n    \"GiangVienID\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-sinh-hoat/assign-advisor",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-sinh-hoat",
+                "assign-advisor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm sinh viên vào lớp sinh hoạt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopSinhHoatID\": 5,\r\n    \"SinhVienID\": [3, 4]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-sinh-hoat/add-students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-sinh-hoat",
+                "add-students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách sinh viên theo lớp sinh hoat",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopSinhHoatID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-sinh-hoat/list-students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-sinh-hoat",
+                "list-students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xóa sinh viên khỏi lớp sinh hoạt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"SinhVienID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/lop-sinh-hoat/remove-student",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "lop-sinh-hoat",
+                "remove-student"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm Sinh viên (Tự động tạo tài khoản)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MaSV\": \"1111111111\",\r\n    \"HoTen\": \"Nguyễn Văn An\",\r\n    \"khoahoc\": \"K25\",\r\n    \"KhoaID\": 1,\r\n    \"NganhID\": 2,\r\n    \"sodienthoai\": \"0912345678\",\r\n    \"email\": \"an.nv@gmail.com\"\r\n}\r\n/*\r\n{\r\n    \"MaSV\": \"21005678\",\r\n    \"HoTen\": \"Lê Thị Bình\",\r\n    \"khoahoc\": \"K25\",\r\n    \"KhoaID\": 1,\r\n    \"NganhID\": 3,\r\n    \"email\": \"binh.lt@gmail.com\"\r\n}\r\n*/",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/sinh-vien",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "sinh-vien"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm Hồ sơ Nhân sự (Giảng viên/Admin - Chưa có TK)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"RoleID\": 2,\r\n    \"HoTen\": \"ThS. Trần Văn Cường\",\r\n    \"email\": \"cuong.tv@school.edu.vn\",\r\n    \"sodienthoai\": \"0988111222\",\r\n    \"HocVi\": \"Thạc sĩ\",\r\n    \"ChuyenMon\": \"Công nghệ phần mềm\",\r\n    \"KhoaID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/staff-profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "staff-profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cấp tài khoản cho Nhân sự (Đã có hồ sơ)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"StaffID\": 5,\r\n    \"RoleID\": 2,\r\n    \"username\": \"gv_cuongtv\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/assign-account",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "assign-account"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Khóa / Mở khóa tài khoản",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"UserID\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/toggle-status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "toggle-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset mật khẩu về 123456",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"UserID\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/reset-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách Sinh viên",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/sinh-vien/index",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "sinh-vien",
+                "index"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tìm kiếm Sinh viên",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"search\": \"Nguyễn Văn E\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/sinh-vien/search",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "sinh-vien",
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách Giảng viên",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/giang-vien/index",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "giang-vien",
+                "index"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tìm kiếm Nhân sự theo tên",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"RoleID\": 2,\r\n\"search\": \"\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/staff/search",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "staff",
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/users/admin-list/index",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "admin-list",
+                "index"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lấy bảng điểm lớp HP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"LopHocPhanID\": 1}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/diem-so/danh-sach-lop-hp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "diem-so",
+                "danh-sach-lop-hp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm năm học",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"TenNamHoc\": \"2027-2028\",\r\n  \"NgayBatDau\": \"2025-09-01\",\r\n  \"NgayKetThuc\": \"2026-08-31\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nam-hoc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nam-hoc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Nhập điểm học tập",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 1,\r\n    \"UserID\": 1,\r\n    \"DanhSachDiem\": [\r\n        {\r\n            \"DangKyID\": 1,\r\n            \"DiemChuyenCan\": 10,\r\n            \"DiemGiuaKy\": 8.5,\r\n            \"DiemThi\": 7.0\r\n        },\r\n        {\r\n            \"DangKyID\": 2,\r\n            \"DiemChuyenCan\": 9,\r\n            \"DiemGiuaKy\": 7.0,\r\n            \"DiemThi\": 6.5\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/diem-so/nhap-diem",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "diem-so",
+                "nhap-diem"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Nhập điểm rèn luyện",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"HocKyID\": 1,\r\n    \"DanhSachDRL\": [\r\n        {\r\n            \"SinhVienID\": 1,\r\n            \"TongDiem\": 85,\r\n            \"XepLoai\": \"Tốt\"\r\n        },\r\n        {\r\n            \"SinhVienID\": 2,\r\n            \"TongDiem\": 72,\r\n            \"XepLoai\": \"Khá\"\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/diem-so/nhap-diem-ren-luyen",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "diem-so",
+                "nhap-diem-ren-luyen"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Khóa nhập điểm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"LopHocPhanID\": 1}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/diem-so/khoa-diem",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "diem-so",
+                "khoa-diem"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mở khóa nhập điểm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"LopHocPhanID\": 1}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/diem-so/mo-khoa-diem",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "diem-so",
+                "mo-khoa-diem"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thống kê SV theo Khoa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/thong-ke/sinh-vien-khoa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "thong-ke",
+                "sinh-vien-khoa"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thống kê Sĩ số lớp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"HocKyID\": 1}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/thong-ke/si-so-lop",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "thong-ke",
+                "si-so-lop"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thống kê Đậu/Rớt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"LopHocPhanID\": 1}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/thong-ke/ty-le-dau-rot",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "thong-ke",
+                "ty-le-dau-rot"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thống kê GPA trung bình",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"id_hoc_ky\": 2}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/thong-ke/gpa-hoc-ky",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "thong-ke",
+                "gpa-hoc-ky"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách Thông báo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/thong-bao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "thong-bao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm Thông báo mới",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"TieuDe\": \"Thông báo mở đăng ký học phần\",\r\n    \"NoiDung\": \"Sinh viên lưu ý thời gian đăng ký học phần từ ngày 20/03...\",\r\n    \"LoaiThongBao\": \"HocPhan\",\r\n    \"DoiTuong\": \"SinhVien\",\r\n    \"NgayBatDauHienThi\": \"2026-03-16 07:00:00\",\r\n    \"NgayKetThucHienThi\": \"2026-03-30 23:59:59\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/thong-bao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "thong-bao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách Khoa",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/khoa/list",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "khoa",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm Khoa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MaKhoa\": \"CNTT22\",\r\n    \"TenKhoa\": \"Công nghệ thông tin\",\r\n    \"DienThoai\": \"0236123456\",\r\n    \"Email\": \"khoacntt@bachkhoa.edu.vn\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/khoa/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "khoa",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sửa Khoa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"KhoaID\": 1,\r\n    \"MaKhoa\": \"CNTT\",\r\n    \"TenKhoa\": \"Công nghệ thông tin (Cập nhật)\",\r\n    \"DienThoai\": \"0905123456\",\r\n    \"Email\": \"cntt_new@truonghoc.edu.vn\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/khoa/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "khoa",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xóa Khoa",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"KhoaID\": 13\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/khoa/delete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "khoa",
+                "delete"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách Ngành Đào Tạo",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nganh-dao-tao/list",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nganh-dao-tao",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Thêm Ngành Đào Tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MaNganh\": \"KTPM\",\r\n    \"TenNganh\": \"Kỹ thuật phần mềm\",\r\n    \"KhoaID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nganh-dao-tao/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nganh-dao-tao",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sửa Ngành Đào Tạo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NganhID\": 5,\r\n    \"MaNganh\": \"KTPM-Vip\",\r\n    \"TenNganh\": \"Kỹ thuật phần mềm chất lượng cao\",\r\n    \"KhoaID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nganh-dao-tao/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nganh-dao-tao",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xoá Ngành Đào Tạo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NganhID\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nganh-dao-tao/delete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nganh-dao-tao",
+                "delete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login SinhVien",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"svcntt01\",\r\n    \"password\": \"123456\",\r\n    \"device_name\": \"PostmanClient\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login GiangVien",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Nếu đăng nhập thành công (status 200)\r",
+                  "if (pm.response.code === 200) {\r",
+                  "    // Biến dữ liệu từ server trả về thành dạng dễ đọc\r",
+                  "    var responseData = pm.response.json();\r",
+                  "    \r",
+                  "    // Lấy chuỗi token và bỏ vào túi \"access_token\" đã tạo ở Bước 1\r",
+                  "    if (responseData.token) {\r",
+                  "        pm.environment.set(\"access_token\", responseData.token);\r",
+                  "        console.log(\"Đã tự động cất token vào túi!\");\r",
+                  "    }\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"gv01\",\r\n    \"password\": \"123456\",\r\n    \"device_name\": \"PostmanClient\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"admin01\",\r\n    \"password\": \"123456\",\r\n    \"device_name\": \"PostmanClient\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lấy thông tin cá nhân",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Đổi mật khẩu",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"current_password\": \"123456\",\r\n    \"password\": \"123456\",\r\n    \"password_confirmation\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/change-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Giảng Viên",
+      "item": [
+        {
+          "name": "Lấy thông tin cá nhân",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật thông tin (Email/SĐT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Email\": \"gv_new_email@example.com\",\r\n    \"SoDienThoai\": \"0912345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/profile/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "profile",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Đổi mật khẩu",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"old_password\": \"123456\",\r\n    \"new_password\": \"123456\",\r\n    \"new_password_confirmation\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/change-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách lớp học phần được phân công",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lop-phan-cong",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lop-phan-cong"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách sinh viên theo lớp HPdanh sách sinh viên theo lớp HP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lopHocPhanID\": 11\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lop/sinh-vien",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lop",
+                "sinh-vien"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lịch giảng dạy",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lich-giang-day",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lich-giang-day"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lịch coi thi",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lich-coi-thi",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lich-coi-thi"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Nhập điểm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lop_hoc_phan_id\": 1,\r\n    \"sinh_vien_id\": 1,\r\n    \"diem_chuyen_can\": 8.5,\r\n    \"diem_giua_ky\": 7.0,\r\n    \"diem_thi\": 9.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/nhap-diem",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "nhap-diem"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem danh sách lớp sinh hoạt được phân công",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lop-sinh-hoat/phan-cong",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lop-sinh-hoat",
+                "phan-cong"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Danh sách sinh viên trong lớp sinh hoạt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lopSinhHoatID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lop-sinh-hoat/sinh-vien",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lop-sinh-hoat",
+                "sinh-vien"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem điểm rèn luyện của lớp sinh hoạt theo năm, kỳ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_gv}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lopSinhHoatID\": 1,\r\n    \"hocKyID\": 1,\r\n    \"namHocID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/giang-vien/lop-sinh-hoat/diem-ren-luyen",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "giang-vien",
+                "lop-sinh-hoat",
+                "diem-ren-luyen"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sinh viên",
+      "item": [
+        {
+          "name": "Xem profile đầy đủ",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {}
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Chỉ thông tin học tập",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/study-info",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "study-info"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cập nhật email / sđt",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"newemail123@example.com\",\r\n  \"sodienthoai\": \"0918123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/profile/contact",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "profile",
+                "contact"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem chương trình đào tạo đầy đủ",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/chuong-trinh-dao-tao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "chuong-trinh-dao-tao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem các môn đã hoàn thành",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"newemail123@example.com\",\r\n  \"sodienthoai\": \"0918123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/mon-da-hoan-thanh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "mon-da-hoan-thanh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem các môn còn thiếu",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/mon-con-thieu",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "mon-con-thieu"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem Kết Quả Học Tập Tổng Hợp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"HocKyID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/ket-qua-hoc-tap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "ket-qua-hoc-tap"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem lớp đang mở",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/lop-hoc-phan-mo",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "lop-hoc-phan-mo"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Đăng ký học phần (Xem Json trả về ở kết quả đăng ký)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"LopHocPhanID\": 11\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/dang-ky",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "dang-ky"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Kết quả đăng ký",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/check-status/11",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "check-status",
+                "11"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem môn đã đăng ký",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"svcntt01\",\r\n    \"password\": \"123456\",\r\n    \"device_name\": \"PostmanClient\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/da-dang-ky",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "da-dang-ky"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lịch Học",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/lich-hoc?hoc_ky_id=1&date=2026-03-15",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "lich-hoc"
+              ],
+              "query": [
+                {
+                  "key": "hoc_ky_id",
+                  "value": "1"
+                },
+                {
+                  "key": "date",
+                  "value": "2026-03-15"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lịch Thi",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/lich-thi?hoc_ky_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "lich-thi"
+              ],
+              "query": [
+                {
+                  "key": "hoc_ky_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// =============================================\r",
+          "// SCRIPT TỰ ĐỘNG LƯU TOKEN - ÁP DỤNG TOÀN COLLECTION\r",
+          "// =============================================\r",
+          "\r",
+          "if (pm.response.code === 200 || pm.response.code === 201) {\r",
+          "    \r",
+          "    try {\r",
+          "        const response = pm.response.json();\r",
+          "        \r",
+          "        // Kiểm tra các trường token phổ biến\r",
+          "        let newToken = null;\r",
+          "        \r",
+          "        if (response.token) {\r",
+          "            newToken = response.token;\r",
+          "        } \r",
+          "        else if (response.access_token) {\r",
+          "            newToken = response.access_token;\r",
+          "        } \r",
+          "        else if (response.data && response.data.token) {\r",
+          "            newToken = response.data.token;\r",
+          "        } \r",
+          "        else if (response.data && response.data.access_token) {\r",
+          "            newToken = response.data.access_token;\r",
+          "        }\r",
+          "\r",
+          "        if (newToken) {\r",
+          "            // Xác định loại tài khoản dựa trên URL request\r",
+          "            const requestUrl = pm.request.url.toString().toLowerCase();\r",
+          "            \r",
+          "            if (requestUrl.includes('/login') || requestUrl.includes('auth')) {\r",
+          "                \r",
+          "                // Phân biệt loại login dựa trên tên request hoặc body\r",
+          "                const requestName = pm.info.requestName.toLowerCase();\r",
+          "                \r",
+          "                if (requestName.includes('sinh') || requestName.includes('sv') || requestName.includes('student')) {\r",
+          "                    pm.environment.set(\"token\", newToken);\r",
+          "                    console.log(\"✅ Token Sinh Viên đã được lưu vào {{token}}\");\r",
+          "                }\r",
+          "                else if (requestName.includes('giang') || requestName.includes('gv') || requestName.includes('lecturer')) {\r",
+          "                    pm.environment.set(\"token_gv\", newToken);\r",
+          "                    console.log(\"✅ Token Giảng Viên đã được lưu vào {{token_gv}}\");\r",
+          "                }\r",
+          "                else if (requestName.includes('admin')) {\r",
+          "                    pm.environment.set(\"token_admin\", newToken);\r",
+          "                    console.log(\"✅ Token Admin đã được lưu vào {{token_admin}}\");\r",
+          "                }\r",
+          "                else {\r",
+          "                    // Mặc định lưu vào token (nếu không phân biệt được)\r",
+          "                    pm.environment.set(\"token\", newToken);\r",
+          "                    console.log(\"✅ Token mặc định đã được lưu vào {{token}}\");\r",
+          "                }\r",
+          "            }\r",
+          "        }\r",
+          "        \r",
+          "    } catch (e) {\r",
+          "        console.log(\"⚠️ Không thể parse JSON response hoặc không có token.\");\r",
+          "    }\r",
+          "}"
+        ]
+      }
+    }
+  ]
+}

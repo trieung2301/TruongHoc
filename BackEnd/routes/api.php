@@ -26,6 +26,8 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\DiemSoController;
 use App\Http\Controllers\Api\Admin\ThongKeController;
 use App\Http\Controllers\Api\Admin\ThongBaoController;
+use App\Http\Controllers\Api\Admin\KhoaController;
+use App\Http\Controllers\Api\Admin\NganhDaoTaoController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -38,23 +40,30 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // --- SINH VIÊN ---
-    Route::middleware(['auth:api', 'check.active', 'check.sinhvien', 'check.dot_open']) ->prefix('sinh-vien') ->group(function () {
-        Route::get('profile', [SinhVienProfile::class, 'show']);
-        Route::put('profile/contact', [SinhVienProfile::class, 'updateContact']);
-        Route::get('study-info', [SinhVienProfile::class, 'studyInfo']);
-        Route::get('chuong-trinh-dao-tao', [ChuongTrinhDaoTaoController::class, 'getChuongTrinh']);
-        Route::get('mon-da-hoan-thanh', [ChuongTrinhDaoTaoController::class, 'getMonDaHoanThanh']);
-        Route::get('mon-con-thieu', [ChuongTrinhDaoTaoController::class, 'getMonConThieu']);
-        Route::get('loc-hoc-ky', [LichHocController::class, 'getBoLocHocKy']);
-        Route::get('lich-hoc', [LichHocController::class, 'xemLichHoc']);
-        Route::get('lich-thi', [LichThiController::class, 'xemLichThi']);
-        Route::post('ket-qua-hoc-tap', [KetQuaHocTapController::class, 'xemKetQua']);
-        // Đăng ký học phần (Sử dụng Redis Queue)
-        Route::get('lop-hoc-phan-mo', [DangKyHocPhanController::class, 'getLopMo']);
-        Route::post('dang-ky', [DangKyHocPhanController::class, 'dangKy']);
-        Route::get('da-dang-ky', [DangKyHocPhanController::class, 'getDaDangKy']);
-        Route::get('check-status/{lhpID}', [DangKyHocPhanController::class, 'checkStatus']);
-    });
+    Route::middleware(['auth:api', 'check.active', 'check.sinhvien'])
+        ->prefix('sinh-vien')
+        ->group(function () {
+
+            Route::get('profile', [SinhVienProfile::class, 'show']);
+            Route::put('profile/contact', [SinhVienProfile::class, 'updateContact']);
+            Route::get('study-info', [SinhVienProfile::class, 'studyInfo']);
+            
+            Route::get('chuong-trinh-dao-tao', [ChuongTrinhDaoTaoController::class, 'getChuongTrinh']);
+            Route::get('mon-da-hoan-thanh', [ChuongTrinhDaoTaoController::class, 'getMonDaHoanThanh']);
+            Route::get('mon-con-thieu', [ChuongTrinhDaoTaoController::class, 'getMonConThieu']);
+            
+            Route::get('loc-hoc-ky', [LichHocController::class, 'getBoLocHocKy']);
+            Route::get('lich-hoc', [LichHocController::class, 'xemLichHoc']);
+            Route::get('lich-thi', [LichThiController::class, 'xemLichThi']);
+            Route::post('ket-qua-hoc-tap', [KetQuaHocTapController::class, 'xemKetQua']);
+
+            Route::middleware('check.dot_open')->group(function () {
+                Route::get('lop-hoc-phan-mo', [DangKyHocPhanController::class, 'getLopMo']);
+                Route::post('dang-ky', [DangKyHocPhanController::class, 'dangKy']);
+                Route::get('da-dang-ky', [DangKyHocPhanController::class, 'getDaDangKy']);
+                Route::get('check-status/{lhpID}', [DangKyHocPhanController::class, 'checkStatus']);
+            });
+        });
 
     // --- GIẢNG VIÊN ---
     Route::middleware(\App\Http\Middleware\CheckGiangVien::class)->prefix('giang-vien')->group(function () {
@@ -157,5 +166,15 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
         Route::post('thong-ke/si-so-lop', [ThongKeController::class, 'thongKeSiSoLop']);
         Route::post('thong-ke/ty-le-dau-rot', [ThongKeController::class, 'tyLeDauRot']);
         Route::post('thong-ke/gpa-hoc-ky', [ThongKeController::class, 'gpaTrungBinh']);
+
+        Route::get('khoa/list', [KhoaController::class, 'index']);
+        Route::post('khoa/create', [KhoaController::class, 'store']);
+        Route::put('khoa/update', [KhoaController::class, 'update']);
+        Route::delete('khoa/delete', [KhoaController::class, 'destroy']);
+
+        Route::get('nganh-dao-tao/list', [NganhDaoTaoController::class, 'index']);
+        Route::post('nganh-dao-tao/create', [NganhDaoTaoController::class, 'store']);
+        Route::put('nganh-dao-tao/update', [NganhDaoTaoController::class, 'update']);
+        Route::delete('nganh-dao-tao/delete', [NganhDaoTaoController::class, 'destroy']);
     });
 });
