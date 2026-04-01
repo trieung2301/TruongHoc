@@ -2098,7 +2098,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"HocKyID\": 1}"
+              "raw": "{\"LopHocPhanID\": 1}"
             },
             "url": {
               "raw": "http://localhost:8000/api/admin/thong-ke/si-so-lop",
@@ -2533,7 +2533,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"NganhID\": 5,\r\n    \"MaNganh\": \"KTPM-Vip\",\r\n    \"TenNganh\": \"Kỹ thuật phần mềm chất lượng cao\",\r\n    \"KhoaID\": 1\r\n}",
+              "raw": "{\r\n    \"NganhID\": 1,\r\n    \"MaNganh\": \"KTPM-Vip1\",\r\n    \"TenNganh\": \"Kỹ thuật phần mềm chất lượng cao\",\r\n    \"KhoaID\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3879,6 +3879,213 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Danh sách năm học - học kỳ",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/namhoc-hocky",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "namhoc-hocky"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Thêm năm học",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"TenNamHoc\": \"2025-2026\",\r\n    \"NgayBatDau\": \"2025-09-01\",\r\n    \"NgayKetThuc\": \"2026-06-30\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/nam-hoc/store",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "nam-hoc",
+            "store"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Sửa năm học",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"NamHocID\": 1, \r\n    \"TenNamHoc\": \"2025-20126\",\r\n    \"NgayBatDau\": \"2025-09-01\",\r\n    \"NgayKetThuc\": \"2026-06-01\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/nam-hoc/update",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "nam-hoc",
+            "update"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Thêm học kỳ",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"TenHocKy\": \"Học kỳ 1\",\r\n    \"NamHocID\": 1,\r\n    \"LoaiHocKy\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/hoc-ky/store",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "hoc-ky",
+            "store"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cập nhật học kỳ",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"HocKyID\": 12,\r\n    \"NamHocID\": 1,\r\n    \"TenHocKy\": \"Học kỳ 1\",\r\n    \"LoaiHocKy\": 1,\r\n    \"NgayBatDau\": \"2025-09-01\",\r\n    \"NgayKetThuc\": \"2026-01-15\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/hoc-ky/update",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "hoc-ky",
+            "update"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [

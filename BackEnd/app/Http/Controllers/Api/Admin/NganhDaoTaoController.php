@@ -25,12 +25,19 @@ class NganhDaoTaoController extends Controller
         $data = $this->nganhService->create($request->all());
         return response()->json($data, 201);
     }
-
+    
     public function update(Request $request)
     {
         $id = $request->input('NganhID'); 
-        
         $data = $this->nganhService->update($id, $request->all());
+
+        if (!$data) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy Ngành đào tạo với ID: ' . $id
+            ], 404);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Cập nhật ngành thành công',

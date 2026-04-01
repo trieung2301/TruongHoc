@@ -12,7 +12,7 @@ class MonHocService
 {
     public function getMonHocList($khoaId = null, $nganhId = null)
     {
-        $query = MonHoc::with('khoa');
+        $query = MonHoc::with('khoa', 'monTienQuyet', 'monSongHanh');
         if ($khoaId) {
             $query->where('KhoaID', $khoaId);
         }

@@ -44,9 +44,13 @@ class MonHocController extends Controller
     public function update(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'MonHocID' => 'required|exists:monhoc,MonHocID',
-            'TenMon'   => 'sometimes|string',
-            'KhoaID'   => 'sometimes|exists:khoa,KhoaID',
+            'MonHocID'      => 'required|exists:monhoc,MonHocID',
+            'MaMon'         => 'sometimes|string',
+            'TenMon'        => 'sometimes|string',
+            'SoTinChi'      => 'sometimes|integer',
+            'TietLyThuyet'  => 'sometimes|integer',
+            'TietThucHanh'  => 'sometimes|string',
+            'KhoaID'        => 'sometimes|exists:khoa,KhoaID',
         ]);
 
         $monHoc = $this->monHocService->updateMonHoc($validated['MonHocID'], $validated);

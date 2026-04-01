@@ -15,10 +15,15 @@ class NganhDaoTaoService
     {
         return NganhDaoTao::create($data);
     }
-
+    
     public function update($id, array $data)
     {
-        $nganh = NganhDaoTao::findOrFail($id);
+        $nganh = NganhDaoTao::find($id);
+        
+        if (!$nganh) {
+            return null; 
+        }
+
         $nganh->update($data);
         return $nganh;
     }

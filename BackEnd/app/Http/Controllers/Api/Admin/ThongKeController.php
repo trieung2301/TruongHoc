@@ -15,6 +15,17 @@ class ThongKeController extends Controller
         $this->thongKeService = $thongKeService;
     }
 
+    public function thongKeSiSoLop(Request $request)
+    {
+        $filters = $request->only(['LopHocPhanID']);
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->thongKeService->thongKeSiSoLop($filters)
+        ]);
+    }
+    
+
     public function sinhVienTheoKhoa()
     {
         return response()->json([

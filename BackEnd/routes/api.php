@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\Admin\ThongKeController;
 use App\Http\Controllers\Api\Admin\ThongBaoController;
 use App\Http\Controllers\Api\Admin\KhoaController;
 use App\Http\Controllers\Api\Admin\NganhDaoTaoController;
+use App\Http\Controllers\Api\HocTap\HocKyNamHocController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -38,6 +39,15 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/change-password', [AuthController::class, 'changePasswordHash']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    //Xem chung nam hoc hoc ky
+    Route::get('/namhoc-hocky', [HocKyNamHocController::class, 'index'])->name('daotao.index');
+    //Nam hoc
+    Route::post('/nam-hoc/store', [HocKyNamHocController::class, 'storeNamHoc']);
+    Route::post('/nam-hoc/update', [HocKyNamHocController::class, 'updateNamHoc']);
+    //Hoc ky
+    Route::post('/hoc-ky/store', [HocKyNamHocController::class, 'storeHocKy']);
+    Route::post('/hoc-ky/update', [HocKyNamHocController::class, 'updateHocKy']);
 
     // --- SINH VIÊN ---
     Route::middleware(['auth:api', 'check.active', 'check.sinhvien'])

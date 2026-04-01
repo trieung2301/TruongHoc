@@ -28,8 +28,8 @@ class ThongKeService
     public function thongKeSiSoLop(array $filters)
     {
         return VDanhSachLopGiangVien::query()
-            ->when($filters['HocKyID'] ?? null, function($q, $id) {
-                return $q->where('HocKyID', $id);
+            ->when($filters['LopHocPhanID'] ?? null, function($q, $id) {
+                return $q->where('LopHocPhanID', $id);
             })
             ->get(['MaLopHP', 'TenMon', 'SoLuongToiDa', 'SoSinhVien']);
     }
