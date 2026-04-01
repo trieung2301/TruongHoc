@@ -10,6 +10,7 @@ use App\Models\SinhVien;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class DangKyHocPhanService
 {
@@ -87,8 +88,19 @@ class DangKyHocPhanService
 
     private function checkSiSo(LopHocPhan $lop): bool
     {
-        $daDangKy = $lop->dangKyHocPhan()->count();
-        return $daDangKy < $lop->SoLuongToiDa;
+        $key = "lophocphan:{$lop->LopHocPhanID}:slots";
+    
+        $remaining = Redis::get($key);
+
+        if ($remaining === null) {
+            $daDangKy = $lop->dangKyHocPhan()->count();
+            $remaining = $lop->SoLuongToiDa - $daDangKy;
+            
+            // Lưu vào Redis với thời hạn 1 giờ (3600 giây)
+            Redis::setex($key, 3600, $remaining);
+        }
+
+        return (int)$remaining > 0;
     }
 
     private function checkMonTienQuyet(int $sinhVienID, $monHoc): bool

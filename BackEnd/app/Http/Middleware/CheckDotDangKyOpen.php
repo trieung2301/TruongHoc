@@ -15,19 +15,20 @@ class CheckDotDangKyOpen
                         ?? $request->route('lopHocPhanId') 
                         ?? $request->route('lhpID');
 
-        $lop = LopHocPhan::find($lopHocPhanId);
-        if (!$lop) {
-            return response()->json(['message' => 'Lớp không tồn tại'], 404);
+        $query = DotDangKy::where('TrangThai', 1)
+            ->where('NgayBatDau', '<=', now())
+            ->where('NgayKetThuc', '>=', now());
+
+        if ($lopHocPhanId) {
+            $lop = LopHocPhan::find($lopHocPhanId);
+            if (!$lop) {
+                return response()->json(['message' => 'Lớp không tồn tại'], 404);
+            }
+            $query->where('HocKyID', $lop->HocKyID);
         }
 
-        $dotMo = DotDangKy::where('HocKyID', $lop->HocKyID)
-            ->where('TrangThai', 1)
-            ->where('NgayBatDau', '<=', now())
-            ->where('NgayKetThuc', '>=', now())
-            ->exists();
-
-        if (!$dotMo) {
-            return response()->json(['message' => 'Hiện tại không trong thời gian đăng ký cho học kỳ này'], 403);
+        if (!$query->exists()) {
+            return response()->json(['message' => 'Hiện tại không trong thời gian đăng ký'], 403);
         }
 
         return $next($request);

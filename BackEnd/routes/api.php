@@ -62,6 +62,7 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
                 Route::post('dang-ky', [DangKyHocPhanController::class, 'dangKy']);
                 Route::get('da-dang-ky', [DangKyHocPhanController::class, 'getDaDangKy']);
                 Route::get('check-status/{lhpID}', [DangKyHocPhanController::class, 'checkStatus']);
+                Route::delete('/huy-mon/{dangKyID}', [DangKyHocPhanController::class, 'huyMon']);
             });
         });
 

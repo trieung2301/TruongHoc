@@ -3711,7 +3711,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"username\": \"svcntt01\",\r\n    \"password\": \"123456\",\r\n    \"device_name\": \"PostmanClient\"\r\n}"
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "http://localhost:8000/api/sinh-vien/da-dang-ky",
@@ -3831,6 +3836,43 @@
                   "key": "hoc_ky_id",
                   "value": "1"
                 }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Huỷ đăng ký môn",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/huy-mon/11",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "huy-mon",
+                "11"
               ]
             }
           },

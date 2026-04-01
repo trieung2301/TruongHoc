@@ -10,11 +10,19 @@ use App\Models\LopHocPhan;
 use App\Models\DotDangKy;
 use App\Models\DangKyHocPhan;
 use App\Models\LichThi;
+use App\Services\DangKyHocPhanService;
 use App\Services\StoreProcedure\HuyDangKyHocPhanService;
 use App\Jobs\ProcessDangKyHocPhan;
 
 class DangKyHocPhanController extends Controller
 {
+    protected $service;
+
+    public function __construct(DangKyHocPhanService $service)
+    {
+        $this->service = $service;
+    }
+
     public function getLopMo()
     {
         $dotMo = DotDangKy::where('TrangThai', 1)
@@ -36,43 +44,34 @@ class DangKyHocPhanController extends Controller
     public function dangKy(Request $request)
     {
         $validated = $request->validate([
-            'LopHocPhanID' => 'required|integer|exists:lophocphan,LopHocPhanID',
+            'LopHocPhanID' => 'required|integer|exists:LopHocPhan,LopHocPhanID',
         ]);
 
-        $user = $request->user(); 
-        $sinhVien = $user->sinhVien;
-        $lopHocPhanID = (int) $validated['LopHocPhanID'];
-
-        if (!$sinhVien) {
-            return response()->json(['message' => 'Không tìm thấy thông tin sinh viên.'], 404);
-        }
-
-        $statusKey = "registration_status:{$sinhVien->SinhVienID}:{$lopHocPhanID}";
-        Redis::del($statusKey);
-
-        $lockKey = "lock:lophocphan:{$lopHocPhanID}:reserve";
-        $lock = Cache::lock($lockKey, 10);
-
-        if (!$lock->get()) {
-            return response()->json([
-                'status'  => 'failed',
-                'message' => 'Lớp đang được nhiều bạn đăng ký cùng lúc. Vui lòng thử lại sau 5-10 giây.'
-            ], 429);
-        }
-
         try {
-            ProcessDangKyHocPhan::dispatch(
-                $user->UserID,
-                $sinhVien->SinhVienID,
-                $lopHocPhanID
-            )->onQueue('registration');
+            $user = $request->user();
+            $sinhVien = $user->sinhVien; 
+            $lopHocPhanID = $validated['LopHocPhanID'];
+
+            if (!$sinhVien) {
+                return response()->json(['message' => 'Không tìm thấy thông tin sinh viên.'], 404);
+            }
+
+            $this->service->validateAll($sinhVien, $lopHocPhanID);
+
+            ProcessDangKyHocPhan::dispatch($user->UserID, $sinhVien->SinhVienID, $lopHocPhanID)
+                ->onQueue('registration');
 
             return response()->json([
-                'status'  => 'processing',
-                'message' => 'Yêu cầu đăng ký đã được gửi. Hệ thống đang xử lý... Kết quả sẽ có trong vài giây.'
-            ]);
-        } finally {
-            $lock->release();
+                'status'  => 'success',
+                'message' => 'Yêu cầu đăng ký đã được ghi nhận vào hệ thống xử lý.',
+                'detail'  => 'Vui lòng kiểm tra trạng thái tại mục "Lớp đã đăng ký" sau vài giây.'
+            ], 202);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $e->getMessage()
+            ], 400);
         }
     }
 
@@ -103,30 +102,52 @@ class DangKyHocPhanController extends Controller
         ]);
     }
 
-    public function huyMon(Request $request, $dangKyID)
+    public function huyMon(Request $request, $lhpID)
     {
-        $service = app(HuyDangKyHocPhanService::class);
+        $serviceHuy = app(HuyDangKyHocPhanService::class);
         $user = $request->user();
+        $sinhVien = $user->sinhVien;
 
-        $result = $service->huyDangKy($dangKyID, $user->UserID);
+        if (!$sinhVien) {
+            return response()->json(['message' => 'Không tìm thấy thông tin sinh viên.'], 404);
+        }
+        $dangKy = DangKyHocPhan::where('LopHocPhanID', $lhpID)
+            ->where('SinhVienID', $sinhVien->SinhVienID)
+            ->first();
 
-        if ($result['success']) {
-            $dangKy = DangKyHocPhan::find($dangKyID);
-            if ($dangKy) {
-                $lopId = $dangKy->LopHocPhanID;
-                $lop = LopHocPhan::find($lopId);
-
-                if ($lop) {
-                    $currentCount = DangKyHocPhan::where('LopHocPhanID', $lopId)->count();
-                    $remaining = $lop->SoLuongToiDa - $currentCount;
-                    Redis::set("lophocphan:{$lopId}:slots", max(0, $remaining));
-                }
-            }
-
-            return response()->json(['message' => $result['message']]);
+        if (!$dangKy) {
+            return response()->json(['message' => 'Bạn không có lịch đăng ký lớp này.'], 404);
         }
 
-        return response()->json(['message' => $result['message']], 400);
+        $result = $serviceHuy->huyDangKy($dangKy->DangKyID, $user->UserID);
+
+        if ($result['success']) {
+            $this->updateSlotsAfterCancel($lhpID);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $result['message']
+            ]);
+        }
+
+        return response()->json(['status' => 'error', 'message' => $result['message']], 400);
+    }
+
+    private function updateSlotsAfterCancel(int $lhpID)
+    {
+        $lop = LopHocPhan::find($lhpID);
+        if ($lop) {
+            $key = "lophocphan:{$lhpID}:slots";
+            
+            $currentOccupied = DangKyHocPhan::where('LopHocPhanID', $lhpID)
+                ->where('TrangThai', 'DaDangKy')
+                ->count();
+                
+            $remaining = max(0, $lop->SoLuongToiDa - $currentOccupied);
+            Redis::setex($key, 3600, $remaining);
+            
+            \Illuminate\Support\Facades\Cache::tags(['lop_mo'])->flush();
+        }
     }
 
     public function getDaDangKy(Request $request)
@@ -159,23 +180,19 @@ class DangKyHocPhanController extends Controller
     
     private function trungLichThi(LichThi $lt1, LichThi $lt2): bool
     {
-        // Nếu ngày thi khác nhau → không trùng
         if ($lt1->NgayThi != $lt2->NgayThi) {
             return false;
         }
 
-        // Chuyển giờ thành timestamp (dùng strtotime)
         $start1 = strtotime($lt1->GioBatDau);
         $end1   = strtotime($lt1->GioKetThuc);
         $start2 = strtotime($lt2->GioBatDau);
         $end2   = strtotime($lt2->GioKetThuc);
 
-        // Nếu có giờ nào không parse được → coi như không trùng (an toàn)
         if ($start1 === false || $end1 === false || $start2 === false || $end2 === false) {
             return false;
         }
 
-        // Trùng nếu khoảng thời gian giao nhau
         return !($end1 <= $start2 || $end2 <= $start1);
     }
 }
