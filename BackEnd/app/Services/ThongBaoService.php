@@ -3,18 +3,28 @@
 namespace App\Services;
 
 use App\Models\ThongBao;
-use Illuminate\Support\Facades\Auth;
 
 class ThongBaoService
 {
-    public function getAllThongBao()
+    public function getThongBaoSinhVien($perPage = 10)
     {
-        return ThongBao::orderBy('created_at', 'desc')->get();
+        return ThongBao::active()
+            ->where(function ($query) {
+                $query->where('DoiTuong', 'SinhVien')
+                      ->orWhere('DoiTuong', 'TatCa');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 
-    public function createThongBao(array $data)
+    public function getThongBaoChiTiet($id)
     {
-        $data['NguoiGuiID'] = Auth::id();
-        return ThongBao::create($data);
+        return ThongBao::active()
+            ->where('ThongBaoID', $id)
+            ->where(function ($query) {
+                $query->where('DoiTuong', 'SinhVien')
+                      ->orWhere('DoiTuong', 'TatCa');
+            })
+            ->firstOrFail();
     }
 }

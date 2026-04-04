@@ -25,7 +25,8 @@ use App\Http\Controllers\Api\Admin\LopSinhHoatController as AdminLopSinhHoatCont
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\DiemSoController;
 use App\Http\Controllers\Api\Admin\ThongKeController;
-use App\Http\Controllers\Api\Admin\ThongBaoController;
+use App\Http\Controllers\Api\Admin\ThongBaoController as ThongBaoAdmin;
+use App\Http\Controllers\Api\SinhVien\ThongBaoController as ThongBaoSinhVien;
 use App\Http\Controllers\Api\Admin\KhoaController;
 use App\Http\Controllers\Api\Admin\NganhDaoTaoController;
 use App\Http\Controllers\Api\HocTap\HocKyNamHocController;
@@ -66,6 +67,9 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
             Route::get('lich-hoc', [LichHocController::class, 'xemLichHoc']);
             Route::get('lich-thi', [LichThiController::class, 'xemLichThi']);
             Route::post('ket-qua-hoc-tap', [KetQuaHocTapController::class, 'xemKetQua']);
+
+            Route::get('/thong-bao', [ThongBaoSinhVien::class, 'index']);
+            Route::post('/thong-bao/chi-tiet', [ThongBaoSinhVien::class, 'show']);
 
             Route::middleware('check.dot_open')->group(function () {
                 Route::get('lop-hoc-phan-mo', [DangKyHocPhanController::class, 'getLopMo']);
@@ -108,8 +112,8 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
     });
 
     Route::middleware(\App\Http\Middleware\CheckAdmin::class)->prefix('admin')->group(function () {
-        Route::post('/thong-bao', [ThongBaoController::class, 'store']);
-        Route::get('/thong-bao', [ThongBaoController::class, 'index']);
+        Route::post('/thong-bao', [ThongBaoAdmin::class, 'store']);
+        Route::get('/thong-bao', [ThongBaoAdmin::class, 'index']);
 
         Route::post('nam-hoc', [NamHocController::class, 'storeNamHoc']);
         Route::post('hoc-ky', [NamHocController::class, 'storeHocKy']);

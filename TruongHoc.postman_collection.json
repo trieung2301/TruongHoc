@@ -3404,7 +3404,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"email\": \"newemail123@example.com\",\r\n  \"sodienthoai\": \"0918123456\"\r\n}",
+              "raw": "{\r\n  \"email\": \"newemail1123@example.com\",\r\n  \"sodienthoai\": \"0918123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3873,6 +3873,87 @@
                 "sinh-vien",
                 "huy-mon",
                 "11"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Xem thông báo",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/thong-bao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "thong-bao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Chi tiết 1 thông báo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/thong-bao/chi-tiet",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "thong-bao",
+                "chi-tiet"
               ]
             }
           },
