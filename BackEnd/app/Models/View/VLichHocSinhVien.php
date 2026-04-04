@@ -11,12 +11,13 @@ class VLichHocSinhVien extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'SinhVienID', 'MaSV', 'HoTen', 'LichHocID', 'LopHocPhanID', 'NgayHoc', 
-        'BuoiHoc', 'TietBatDau', 'SoTiet', 'PhongHoc', 'GhiChu', 
-        'TenMon', 'MaLopHP', 'TenGiangVien',
-        'HocKyID', 'TenHocKy', 'NamHocID', 'TenNamHoc',
-        'NgayBatDauLop', 'NgayKetThucLop', 'NgayBatDauHocKy', 'NgayKetThucHocKy'
-    ];
+    'SinhVienID', 'MaSV', 'HoTen', 'LichHocID', 'LopHocPhanID', 'NgayHoc', 
+    'Thu',
+    'BuoiHoc', 'TietBatDau', 'SoTiet', 'PhongHoc', 'GhiChu', 
+    'TenMon', 'MaLopHP', 'TenGiangVien',
+    'HocKyID', 'TenHocKy', 'NamHocID', 'TenNamHoc',
+    'NgayBatDauLop', 'NgayKetThucLop', 'NgayBatDauHocKy', 'NgayKetThucHocKy'
+];
 
     public function lopHocPhan()
     {

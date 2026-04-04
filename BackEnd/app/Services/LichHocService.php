@@ -54,23 +54,28 @@ class LichHocService
 
         if ($sinhVienIds->isEmpty()) return;
 
+        $thuCuaNgay = \Carbon\Carbon::parse($ngayHoc)->dayOfWeek + 1; // Carbon 0 (Sun) -> 6 (Sat). SQL 2 -> 8.
+
         $trungLich = DB::table('lichhoc as lh')
             ->join('dangkyhocphan as dk', 'lh.LopHocPhanID', '=', 'dk.LopHocPhanID')
             ->whereIn('dk.SinhVienID', $sinhVienIds)
-            ->where('lh.NgayHoc', $ngayHoc)
+            ->where(function($query) use ($ngayHoc, $thuCuaNgay) {
+                $query->where('lh.NgayHoc', $ngayHoc)
+                    ->orWhere('lh.Thu', $thuCuaNgay); // Kiểm tra trùng theo thứ
+            })
             ->where(function($q) use ($tietBD, $tietKT) {
                 $q->whereBetween('lh.TietBatDau', [$tietBD, $tietKT])
-                  ->orWhereRaw('? BETWEEN lh.TietBatDau AND (lh.TietBatDau + lh.SoTiet - 1)', [$tietBD]);
+                ->orWhereRaw('lh.TietBatDau + lh.SoTiet - 1 BETWEEN ? AND ?', [$tietBD, $tietKT]);
             });
 
         if ($excludeId) {
-            $trungLich->where('lh.LichHocID', '!=', $excludeId);
-        } else {
-            $trungLich->where('lh.LopHocPhanID', '!=', $lopID);
+            $trungLich->where('lh.LichHocID', '<>', $excludeId);
         }
 
-        if ($trungLich->exists()) {
-            throw new Exception("Trùng lịch học của sinh viên đã đăng ký lớp này!");
+        $exists = $trungLich->first();
+
+        if ($exists) {
+            throw new \Exception("Trùng lịch: Một hoặc nhiều sinh viên trong lớp đã có lịch học khác vào thời gian này.");
         }
     }
 }

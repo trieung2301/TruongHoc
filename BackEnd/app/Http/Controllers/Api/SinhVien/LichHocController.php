@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\SinhVien;
 
 use App\Http\Controllers\Controller;
 use App\Models\NamHoc;
-use App\Services\SinhVienLichService; // Sử dụng service đã gộp
+use App\Services\SinhVienLichService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
