@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\SinhVien\LichHocController;
 use App\Http\Controllers\Api\SinhVien\LichThiController;
 use App\Http\Controllers\Api\SinhVien\KetQuaHocTapController;
 use App\Http\Controllers\Api\SinhVien\DangKyHocPhanController;
+use App\Http\Controllers\Api\SinhVien\NguyenVongController as NguyenVongSinhVien;
 use App\Http\Controllers\Api\HocTap\LopHocPhanController;
 use App\Http\Controllers\Api\GiangVien\ProfileController as GiangVienProfile;
 use App\Http\Controllers\Api\GiangVien\LopHocPhanGiangVienController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Api\Admin\ThongBaoController as ThongBaoAdmin;
 use App\Http\Controllers\Api\SinhVien\ThongBaoController as ThongBaoSinhVien;
 use App\Http\Controllers\Api\Admin\KhoaController;
 use App\Http\Controllers\Api\Admin\NganhDaoTaoController;
+use App\Http\Controllers\Api\Admin\NguyenVongController as NguyenVongAdmin;
 use App\Http\Controllers\Api\HocTap\HocKyNamHocController;
 
 
@@ -68,15 +70,19 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
             Route::get('lich-thi', [LichThiController::class, 'xemLichThi']);
             Route::post('ket-qua-hoc-tap', [KetQuaHocTapController::class, 'xemKetQua']);
 
-            Route::get('/thong-bao', [ThongBaoSinhVien::class, 'index']);
-            Route::post('/thong-bao/chi-tiet', [ThongBaoSinhVien::class, 'show']);
+            Route::get('thong-bao', [ThongBaoSinhVien::class, 'index']);
+            Route::post('thong-bao/chi-tiet', [ThongBaoSinhVien::class, 'show']);
+
+            Route::get('nguyen-vong', [NguyenVongSinhVien::class, 'index']);
+            Route::post('nguyen-vong/store', [NguyenVongSinhVien::class, 'store']);
+            Route::delete('nguyen-vong/cancel', [NguyenVongSinhVien::class, 'destroy']);
 
             Route::middleware('check.dot_open')->group(function () {
                 Route::get('lop-hoc-phan-mo', [DangKyHocPhanController::class, 'getLopMo']);
                 Route::post('dang-ky', [DangKyHocPhanController::class, 'dangKy']);
                 Route::get('da-dang-ky', [DangKyHocPhanController::class, 'getDaDangKy']);
                 Route::get('check-status/{lhpID}', [DangKyHocPhanController::class, 'checkStatus']);
-                Route::delete('/huy-mon/{dangKyID}', [DangKyHocPhanController::class, 'huyMon']);
+                Route::delete('huy-mon/{dangKyID}', [DangKyHocPhanController::class, 'huyMon']);
             });
         });
 
@@ -112,8 +118,8 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
     });
 
     Route::middleware(\App\Http\Middleware\CheckAdmin::class)->prefix('admin')->group(function () {
-        Route::post('/thong-bao', [ThongBaoAdmin::class, 'store']);
-        Route::get('/thong-bao', [ThongBaoAdmin::class, 'index']);
+        Route::post('thong-bao', [ThongBaoAdmin::class, 'store']);
+        Route::get('thong-bao', [ThongBaoAdmin::class, 'index']);
 
         Route::post('nam-hoc', [NamHocController::class, 'storeNamHoc']);
         Route::post('hoc-ky', [NamHocController::class, 'storeHocKy']);
@@ -191,5 +197,9 @@ Route::middleware(['auth:api', \App\Http\Middleware\CheckActiveUser::class])->gr
         Route::post('nganh-dao-tao/create', [NganhDaoTaoController::class, 'store']);
         Route::put('nganh-dao-tao/update', [NganhDaoTaoController::class, 'update']);
         Route::delete('nganh-dao-tao/delete', [NganhDaoTaoController::class, 'destroy']);
+
+        Route::get('nguyen-vong', [NguyenVongAdmin::class, 'index']);
+        Route::post('nguyen-vong-convert', [NguyenVongAdmin::class, 'convertToClass']);
+        Route::post('nguyen-vong/delete', [NguyenVongAdmin::class, 'destroy']);
     });
 });
