@@ -616,7 +616,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"LichHocID\": 2, \r\n    \"NgayHoc\": \"2024-05-21\",\r\n    \"BuoiHoc\": \"Chiều\",\r\n    \"TietBatDau\": 7,\r\n    \"SoTiet\": 3,\r\n    \"PhongHoc\": \"B2-202\"\r\n}",
+              "raw": "{\r\n    \"LichHocID\": 16, \r\n    \"NgayHoc\": \"2024-05-21\",\r\n    \"BuoiHoc\": \"Chiều\",\r\n    \"Thu\": 3,\r\n    \"TietBatDau\": 7,\r\n    \"SoTiet\": 3,\r\n    \"PhongHoc\": \"B2-202\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -993,7 +993,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"TenMon\": \"Cấu trúc dữ liệu và Giải thuật (Nâng cao)\",\r\n    \"KhoaID\": 1\r\n}",
+              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"MaMon\": \"IT101\",\r\n    \"TenMon\": \"Cấu trúc dữ liệu và Giải thuật (Nâng cao)\",\r\n    \"SoTinChi\": 3,\r\n    \"TietLyThuyet\": 3,\r\n    \"TietThucHanh\": 3,\r\n    \"KhoaID\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2598,6 +2598,86 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Lấy danh sách Nguyện vọng",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"HocKyID\": 1\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nguyen-vong",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nguyen-vong"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Chuyển Nguyện vọng thành Lớp học phần",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_admin}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NhomID\": 1,\r\n    \"GiangVienID\": 2,\r\n    \"MaLopHP\": \"LHP_TEST_001_20\",\r\n    \"SoLuongToiDa\": 50,\r\n    \"NgayBatDau\": \"2026-05-04\",\r\n    \"NgayKetThuc\": \"2027-11-04\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/nguyen-vong-convert",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "nguyen-vong-convert"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -3766,7 +3846,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8000/api/sinh-vien/lich-hoc?hoc_ky_id=1&date=2026-03-15",
+              "raw": "http://localhost:8000/api/sinh-vien/lich-hoc?hoc_ky_id=1&date=2026-05-04",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -3784,7 +3864,7 @@
                 },
                 {
                   "key": "date",
-                  "value": "2026-03-15"
+                  "value": "2026-05-04"
                 }
               ]
             }
@@ -3954,6 +4034,134 @@
                 "sinh-vien",
                 "thong-bao",
                 "chi-tiet"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Nguyện vọng",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"HocKyID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/nguyen-vong",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "nguyen-vong"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Đăng ký Nguyện vọng",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"MonHocID\": 1,\r\n    \"HocKyID\": 1,\r\n    \"Thu\": 3,\r\n    \"BuoiHoc\": \"Sáng\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/nguyen-vong/store",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "nguyen-vong",
+                "store"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Huỷ Nguyện vọng",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"NhomID\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/sinh-vien/nguyen-vong/cancel",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "sinh-vien",
+                "nguyen-vong",
+                "cancel"
               ]
             }
           },

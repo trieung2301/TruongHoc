@@ -45,17 +45,17 @@ class MonHocController extends Controller
     {
         $validated = $request->validate([
             'MonHocID'      => 'required|exists:monhoc,MonHocID',
-            'MaMon'         => 'sometimes|string',
+            'MaMon'         => 'sometimes|string|unique:monhoc,MaMon,' . $request->MonHocID . ',MonHocID',
             'TenMon'        => 'sometimes|string',
-            'SoTinChi'      => 'sometimes|integer',
-            'TietLyThuyet'  => 'sometimes|integer',
-            'TietThucHanh'  => 'sometimes|string',
+            'SoTinChi'      => 'sometimes|integer|min:1',
+            'TietLyThuyet'  => 'sometimes|integer|min:0',
+            'TietThucHanh'  => 'sometimes|integer|min:0', 
             'KhoaID'        => 'sometimes|exists:khoa,KhoaID',
         ]);
 
         $monHoc = $this->monHocService->updateMonHoc($validated['MonHocID'], $validated);
         return response()->json(['message' => 'Cập nhật thành công', 'data' => $monHoc]);
-    }
+}
 
     public function addTienQuyet(Request $request): JsonResponse
     {

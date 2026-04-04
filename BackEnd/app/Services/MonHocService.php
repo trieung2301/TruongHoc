@@ -48,14 +48,14 @@ class MonHocService
         $monHoc = MonHoc::findOrFail($monHocId);
 
         DB::transaction(function () use ($monHoc, $data) {
-            $monHoc->update(array_filter([
-                'MaMon'        => $data['MaMon'] ?? null,
-                'TenMon'       => $data['TenMon'] ?? null,
-                'SoTinChi'     => $data['SoTinChi'] ?? null,
-                'TietLyThuyet' => $data['TietLyThuyet'] ?? null,
-                'TietThucHanh' => $data['TietThucHanh'] ?? null,
-                'KhoaID'       => $data['KhoaID'] ?? null,
-            ]));
+            $monHoc->update([
+                'MaMon'         => $data['MaMon'] ?? $monHoc->MaMon,
+                'TenMon'        => $data['TenMon'] ?? $monHoc->TenMon,
+                'SoTinChi'      => $data['SoTinChi'] ?? $monHoc->SoTinChi,
+                'TietLyThuyet'  => $data['TietLyThuyet'] ?? $monHoc->TietLyThuyet,
+                'TietThucHanh'  => $data['TietThucHanh'] ?? $monHoc->TietThucHanh,
+                'KhoaID'        => $data['KhoaID'] ?? $monHoc->KhoaID,
+            ]);
         });
 
         $this->logAction('UPDATE', "Cập nhật môn học: {$monHoc->TenMon}", 'monhoc', $monHoc->MonHocID);

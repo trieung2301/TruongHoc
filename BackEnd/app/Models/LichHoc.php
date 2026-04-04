@@ -14,6 +14,7 @@ class LichHoc extends Model
         'LopHocPhanID',
         'NgayHoc',
         'BuoiHoc',
+        'Thu',
         'TietBatDau',
         'SoTiet',
         'PhongHoc',

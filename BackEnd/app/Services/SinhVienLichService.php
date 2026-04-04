@@ -30,7 +30,7 @@ class SinhVienLichService
             ->get()
             ->map(fn($item) => [
                 'ngay_hoc'    => $item->NgayHoc,
-                'thu'         => Carbon::parse($item->NgayHoc)->locale('vi')->dayName,
+                'thu'         => $item->Thu == 8 ? 'Chủ Nhật' : 'Thứ ' . $item->Thu,
                 'ten_mon'     => $item->TenMon,
                 'phong'       => $item->PhongHoc,
                 'tiet_bd'     => $item->TietBatDau,
